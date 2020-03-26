@@ -1,0 +1,80 @@
+﻿@model PagedList.IPagedList<LegalConsulting.Models.Case>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<br /><br />
+
+<h2>Cases</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("Index", "Case", FormMethod.Get))
+{
+    <p>
+        Seacrh @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @id = "search"})
+    </p>
+}
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.ActionLink("Case Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            Case Description
+        </th>
+        <th>
+            @Html.ActionLink("Start Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="search">
+            <td>
+                @Html.DisplayFor(modelItem => item.CaseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CaseID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CaseID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CaseID })
+            </td>
+        </tr>
+    }
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function Contains(text_one, text_two) {
+            if (text_one.indexOf(text_two) != -1)
+                return true;
+        }
+        $("#search").keyup(function () {
+            var searchText = $("#search").val().toLowerCase();
+            $(".search").each(function () {
+                if (!Contains($(this).text().toLowerCase(), searchText)) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>

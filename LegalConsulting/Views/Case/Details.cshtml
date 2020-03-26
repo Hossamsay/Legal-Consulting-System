@@ -1,0 +1,114 @@
+﻿    @model LegalConsulting.Models.Case
+
+    @{
+        ViewBag.Title = "Details";
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+<br /><br />
+    <h2>Details</h2>
+
+    <div>
+        <h4>Case</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Case Number
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CaseID)
+            </dd>
+            <dt>
+                Client ID
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClientID)
+            </dd>
+
+            <dt>
+                Case Name
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CaseName)
+            </dd>
+
+            <dt>
+                Case Type
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+            <dd>
+                <table class="table">
+                    <tr>
+                        <th>Lawyer Name</th>
+                        <th>Hour Rate</th>
+                        <th>Hours</th>
+                        <th>Price</th>
+                    </tr>
+                    @{double total = 0;}
+                    @foreach (var item in Model.CaseDetails)
+
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Lawyer.FullName)
+                            </td>
+                            <td>
+                                @item.Lawyer.PricePerHour EGP
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Hours)
+                            </td>
+                            <td>
+                                @((item.Hours) * (item.Lawyer.PricePerHour)) EGP
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        total += item.Hours * item.Lawyer.PricePerHour;
+                    }
+
+                    <tr>
+                        <br />
+
+                        <th>Total Hours</th>
+                        <td></td>
+                        <td></td>
+                        <th>
+                            @total EGP
+                        </th>
+                    </tr>
+
+
+
+                </table>
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.CaseID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>

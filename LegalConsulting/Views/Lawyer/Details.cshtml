@@ -1,0 +1,75 @@
+﻿@model LegalConsulting.Models.Lawyer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<br />
+<br />
+
+<h2>Details</h2>
+
+<div>
+    <h4>Lawyer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HiringDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HiringDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PricePerHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PricePerHour)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Cases)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Case Name</th>
+                    <th>Case Description</th>
+                </tr>
+                @foreach (var item in Model.Cases)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CaseName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LawyerID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
